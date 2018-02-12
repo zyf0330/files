@@ -1,0 +1,21 @@
+upstream backend {
+        server log.duobeiyun.com:80 max_fails=0;
+        keepalive 64;
+}
+server {
+    listen       80;
+    server_name  log.duobeiyun.com;
+
+    location / {
+        proxy_pass http://backend;
+    }
+
+    error_page 404 /404.html;
+        location = /40x.html {
+    }
+
+    error_page 500 502 503 504 /50x.html;
+        location = /50x.html {
+    }
+
+}
